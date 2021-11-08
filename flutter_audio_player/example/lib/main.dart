@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:flutter_audio_player/flutter_audio_player.dart';
+import 'package:flutter_audio_player_platform_interface/flutter_audio_player_platform_interface.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,29 +19,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    initPlatformState();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion =
-          await FlutterAudioPlayer.platformVersion ?? 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
   }
 
   @override
@@ -54,7 +29,34 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () async {
+                  await AudioPlayer().open(AudioDataSource.network(
+                      'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/private/edudata/product/oxford/v2/followReadMp3/917e23f1abc732398dbc740a0a068a91/0027_11.mp3'));
+                },
+                child: Text('open'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  await AudioPlayer().play();
+                },
+                child: Text('play'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  await AudioPlayer().pause();
+                },
+                child: Text('pause'),
+              ),
+              // ProgressIndicator(
+              //   color: Colors.yellow,
+              //   value: AudioPlayer().currentPosition,
+              // ),
+            ],
+          ),
         ),
       ),
     );
