@@ -67,6 +67,10 @@ class MethodChannelAudioPlayer extends AudioPlayerPlatform {
   }
 
   @override
+  ValueStream<double> get playSpeed {
+    return audioPlayer.playSpeed;
+  }
+  @override
   ValueStream<double> get volume {
     return audioPlayer.volume;
   }

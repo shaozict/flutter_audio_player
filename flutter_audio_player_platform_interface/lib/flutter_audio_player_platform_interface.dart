@@ -42,6 +42,9 @@ abstract class AudioPlayerPlatform {
     throw UnimplementedError('init() has not been implemented.');
   }
 
+  Future<void>dispose()async{
+    throw UnimplementedError('dispose() has not been implemented.');
+  }
   Future<void> open(AudioDataSource dataSource) async {
     throw UnimplementedError('open() has not been implemented.');
   }

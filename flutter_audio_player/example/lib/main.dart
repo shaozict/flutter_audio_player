@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_player/flutter_audio_player.dart';
 import 'package:flutter_audio_player_platform_interface/flutter_audio_player_platform_interface.dart';
-
+import 'package:dart_vlc/dart_vlc.dart';
 void main() {
+  // DartVLC.initialize();
   runApp(const MyApp());
 }
 
@@ -14,7 +15,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
 
   @override
   void initState() {

@@ -16,9 +16,8 @@ class AudioPlayer {
     return _instance ??= AudioPlayer._();
   }
 
-  static AudioPlayerPlatform get _audioPlayerPlatform {
-    return Platform.isWindows ? AudioPlayerWindows.instance : AudioPlayerPlatform.instance;
-  }
+  static final AudioPlayerPlatform  _audioPlayerPlatform =Platform.isWindows ? AudioPlayerWindows.instance : AudioPlayerPlatform.instance;
+
 
   static AudioPlayer? _instance;
 
