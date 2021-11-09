@@ -10,7 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  rxdart: ^0.27.2
+  assets_audio_player: ^3.0.3+6
 dev_dependencies:
   flutter_test:
     sdk: flutter

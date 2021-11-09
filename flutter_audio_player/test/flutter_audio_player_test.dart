@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_audio_player/flutter_audio_player.dart';
 
 void main() {
   const MethodChannel channel = MethodChannel('flutter_audio_player');
@@ -15,9 +14,5 @@ void main() {
 
   tearDown(() {
     channel.setMockMethodCallHandler(null);
-  });
-
-  test('getPlatformVersion', () async {
-    expect(await FlutterAudioPlayer.platformVersion, '42');
   });
 }
