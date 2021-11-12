@@ -25,6 +25,9 @@ class AudioPlayer {
     return _audioPlayerPlatform.open(dataSource);
   }
 
+  Future<void> setPlaySpeed(double playSpeed){
+    return _audioPlayerPlatform.setPlaySpeed(playSpeed);
+  }
   Future<void> play() {
     return _audioPlayerPlatform.play();
   }
@@ -48,6 +51,17 @@ class AudioPlayer {
   ValueStream<bool> get isBuffering {
     return _audioPlayerPlatform.isBuffering;
   }
+  ValueStream<bool> get isPlaying {
+    return _audioPlayerPlatform.isPlaying;
+  }
+  ValueStream<bool> get playlistFinished {
+    return _audioPlayerPlatform.playlistFinished;
+  }
+
+
+  Stream<AudioPlayerState> get playerState{
+    return _audioPlayerPlatform.playerState;
+  }
 
   ValueStream<Duration> get currentPosition {
     return _audioPlayerPlatform.currentPosition;
@@ -56,4 +70,9 @@ class AudioPlayer {
   Stream<AudioDataSource?> get onReadyToPlay {
     return _audioPlayerPlatform.onReadyToPlay;
   }
+  Stream<AudioDataSource?> get current {
+    return _audioPlayerPlatform.current;
+  }
+
+
 }

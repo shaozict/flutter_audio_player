@@ -57,16 +57,27 @@ abstract class AudioPlayerPlatform {
     throw UnimplementedError('volume() has not been implemented.');
   }
 
+
   ValueStream<bool> get isBuffering {
     throw UnimplementedError('isBuffering() has not been implemented.');
   }
-
+  ValueStream<bool> get isPlaying {
+    throw UnimplementedError('isPlaying() has not been implemented.');
+  }
   ValueStream<Duration> get currentPosition {
     throw UnimplementedError('currentPosition() has not been implemented.');
   }
 
+  Stream<AudioPlayerState> get playerState{
+    throw UnimplementedError('playerState() has not been implemented.');
+  }
+
   Stream<AudioDataSource?> get onReadyToPlay {
     throw UnimplementedError('currentPosition() has not been implemented.');
+  }
+
+  Stream<AudioDataSource?> get current{
+    throw UnimplementedError('current() has not been implemented.');
   }
 
   ///播放
@@ -74,14 +85,13 @@ abstract class AudioPlayerPlatform {
     throw UnimplementedError('play() has not been implemented.');
   }
 
-  ValueStream<bool> get playlistFinished {
-    throw UnimplementedError('playlistFinished() has not been implemented.');
-  }
-
   Future<void> pause() async {
     throw UnimplementedError('pause() has not been implemented.');
   }
 
+  ValueStream<bool> get playlistFinished {
+    throw UnimplementedError('playlistFinished() has not been implemented.');
+  }
   Future<void> stop() async {
     throw UnimplementedError('stop() has not been implemented.');
   }
@@ -112,7 +122,7 @@ class AudioDataSource {
   final String? package;
   final AudioDataSourceType audioDataSourceType;
   // Metas _metas;
-  final Map<String, String>? _networkHeaders;
+  // final Map<String, String>? _networkHeaders;
   final bool? cached; // download audio then play it
   final double? playSpeed;
   final double? pitch;
@@ -123,7 +133,7 @@ class AudioDataSource {
     this.package,
     this.pitch,
   })  : audioDataSourceType = AudioDataSourceType.asset,
-        _networkHeaders = null,
+        // _networkHeaders = null,
         cached = false;
 
   AudioDataSource.file(
@@ -132,7 +142,7 @@ class AudioDataSource {
     this.pitch,
   })  : audioDataSourceType = AudioDataSourceType.file,
         package = null,
-        _networkHeaders = null,
+        // _networkHeaders = null,
         cached = false;
 
   AudioDataSource.network(
@@ -142,8 +152,9 @@ class AudioDataSource {
     this.playSpeed,
     this.pitch,
   })  : audioDataSourceType = AudioDataSourceType.network,
-        package = null,
-        _networkHeaders = headers;
+        package = null
+        // _networkHeaders = headers
+  ;
 
   AudioDataSource.liveStream(
     this.path, {
@@ -152,6 +163,19 @@ class AudioDataSource {
     Map<String, String>? headers,
   })  : audioDataSourceType = AudioDataSourceType.liveStream,
         package = null,
-        _networkHeaders = headers,
+        // _networkHeaders = headers,
         cached = false;
+
+  @override
+  String toString() {
+    return 'AudioDataSource{path: $path, package: $package, audioDataSourceType: $audioDataSourceType, cached: $cached, playSpeed: $playSpeed, pitch: $pitch}';
+  }
+}
+
+///
+enum AudioPlayerState {
+  unknown,
+  play,
+  pause,
+  stop,
 }
