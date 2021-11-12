@@ -65,6 +65,11 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
   }
 
   @override
+  Future<void> setPlaySpeed(double playSpeed) async{
+   return _player.setRate(playSpeed);
+  }
+
+  @override
   ValueStream<double> get playSpeed {
     _playSpeed.add(_player.general.rate);
     return _playSpeed.stream;
@@ -86,11 +91,4 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
     _currentPosition.add(_player.position.position??Duration.zero);
    return _currentPosition.stream;
   }
-
-  // Stream<AudioDataSource?> get onReadyToPlay {
-  //   _player.current.media
-  // }
-  // @override
-  // Stream<AudioDataSource?> get onReadyToPlay => super.onReadyToPlay;
-  //
 }
