@@ -84,6 +84,7 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
     await _playlistFinished.close();
     await _current.close();
     await _playerState.close();
+    await _onReadyToPlay.close();
    return _player.dispose();
   }
   @override
