@@ -128,16 +128,16 @@ packages:
   flutter_audio_player_platform_interface:
     dependency: transitive
     description:
-      path: "../../flutter_audio_player_platform_interface"
-      relative: true
-    source: path
+      name: flutter_audio_player_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.1"
   flutter_audio_player_windows:
     dependency: transitive
     description:
-      path: "../../flutter_audio_player_windows"
-      relative: true
-    source: path
+      name: flutter_audio_player_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.0.1"
   flutter_lints:
     dependency: "direct dev"
