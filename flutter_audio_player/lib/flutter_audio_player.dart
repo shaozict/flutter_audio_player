@@ -17,14 +17,20 @@ class AudioPlayer {
     return _instance ??= AudioPlayer._();
   }
 
-  static final AudioPlayerPlatform  _audioPlayerPlatform =Platform.isWindows ? AudioPlayerWindows.instance : AudioPlayerPlatform.instance;
-
+  AudioPlayerPlatform  get _audioPlayerPlatform{
+     return Platform.isWindows ? AudioPlayerWindows.instance : AudioPlayerPlatform.instance;
+  }
 
   static AudioPlayer? _instance;
+
+  Future<void> init()async{
+   return _audioPlayerPlatform.init();
+  }
 
   Future<void> open(AudioSource dataSource) {
     return _audioPlayerPlatform.open(dataSource);
   }
+
 
   Future<void> setPlaySpeed(double playSpeed){
     return _audioPlayerPlatform.setPlaySpeed(playSpeed);
@@ -78,5 +84,4 @@ class AudioPlayer {
   Future<void> dispose()async{
     return _audioPlayerPlatform.dispose();
   }
-
 }

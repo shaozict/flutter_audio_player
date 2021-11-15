@@ -9,9 +9,17 @@ import 'audio_data_source.dart';
 class MethodChannelAudioPlayer extends AudioPlayerPlatform {
 
 
-  AssetsAudioPlayer audioPlayer = AssetsAudioPlayer();
+ late AssetsAudioPlayer audioPlayer ;
+ final BehaviorSubject<AudioDataSource> _current = BehaviorSubject<AudioDataSource>();
+
   @override
-  Future<void> init() async {}
+  Future<void> init() async {
+    audioPlayer = AssetsAudioPlayer.withId('SINGLE_PLAYER');
+    audioPlayer.current.listen((event) {
+      _current.add(_covertPlayingAudioToAudioDataSource(event?.audio.audio??Audio('')));
+
+    });
+  }
 
   @override
   Future<void> open(AudioSource dataSource) {
@@ -98,37 +106,38 @@ class MethodChannelAudioPlayer extends AudioPlayerPlatform {
 
 
   @override
-  Stream<AudioDataSource?> get current {
-   return  audioPlayer.current.transform(StreamTransformer<Playing,AudioDataSource>.fromHandlers(handleData: (data,sink){
-      sink.add(_covertPlayingAudioToAudioDataSource(data.audio));
-
-    }));
+  ValueStream<AudioDataSource?> get current {
+   // return  audioPlayer.current.transform(StreamTransformer<Playing,AudioDataSource>.fromHandlers(handleData: (data,sink){
+   //    sink.add(_covertPlayingAudioToAudioDataSource(data.audio));
+   //
+   //  }));
+    return _current.stream;
   }
 
   @override
   Stream<AudioDataSource?> get onReadyToPlay {
     return audioPlayer.onReadyToPlay.transform<AudioDataSource>(StreamTransformer<PlayingAudio, AudioDataSource>.fromHandlers(handleData: (data, sink) {
-      AudioDataSource audioDataSource= _covertPlayingAudioToAudioDataSource(data);
+      AudioDataSource audioDataSource= _covertPlayingAudioToAudioDataSource(data.audio);
       sink.add(audioDataSource);
     }));
   }
 
 
-  AudioDataSource _covertPlayingAudioToAudioDataSource(PlayingAudio data){
+  AudioDataSource _covertPlayingAudioToAudioDataSource(Audio  audio){
 
     AudioDataSource audioDataSource;
-    switch (data.audio.audioType) {
+    switch (audio.audioType) {
       case AudioType.asset:
-        audioDataSource = AudioDataSource.asset(data.audio.path, playSpeed: data.audio.playSpeed);
+        audioDataSource = AudioDataSource.asset(audio.path, playSpeed: audio.playSpeed);
         break;
       case AudioType.network:
-        audioDataSource = AudioDataSource.network(data.audio.path, playSpeed: data.audio.playSpeed);
+        audioDataSource = AudioDataSource.network(audio.path, playSpeed: audio.playSpeed);
         break;
       case AudioType.file:
-        audioDataSource = AudioDataSource.file(data.audio.path, playSpeed: data.audio.playSpeed);
+        audioDataSource = AudioDataSource.file(audio.path, playSpeed: audio.playSpeed);
         break;
       case AudioType.liveStream:
-        audioDataSource = AudioDataSource.liveStream(data.audio.path, playSpeed: data.audio.playSpeed);
+        audioDataSource = AudioDataSource.liveStream(audio.path, playSpeed: audio.playSpeed);
         break;
     }
 
@@ -168,6 +177,12 @@ class MethodChannelAudioPlayer extends AudioPlayerPlatform {
       }
 
     return audio;
+  }
+  @override
+  Future<void> dispose() async{
+    audioPlayer.dispose();
+    await _current.close();
+    return super.dispose();
   }
 
 }

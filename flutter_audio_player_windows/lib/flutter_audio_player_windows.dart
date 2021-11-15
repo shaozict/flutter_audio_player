@@ -7,7 +7,7 @@ import 'package:rxdart/rxdart.dart';
 
 class AudioPlayerWindows extends AudioPlayerPlatform {
 
-  static AudioPlayerWindows instance = AudioPlayerWindows()..init();
+  static AudioPlayerWindows instance = AudioPlayerWindows();
   late  Player _player ;
 
   final BehaviorSubject<Duration> _currentPosition = BehaviorSubject<Duration>.seeded(const Duration());
@@ -108,7 +108,7 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
   }
 
   @override
-  Stream<AudioDataSource?> get current {
+  ValueStream<AudioDataSource?> get current {
 
     return _current.stream;
   }
