@@ -77,7 +77,7 @@ class AudioPlayer {
   Stream<AudioDataSource?> get onReadyToPlay {
     return _audioPlayerPlatform.onReadyToPlay;
   }
-  Stream<AudioDataSource?> get current {
+  ValueStream<AudioDataSource?> get current {
     return _audioPlayerPlatform.current;
   }
 

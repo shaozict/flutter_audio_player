@@ -77,7 +77,7 @@ abstract class AudioPlayerPlatform {
     throw UnimplementedError('currentPosition() has not been implemented.');
   }
 
-  Stream<AudioDataSource?> get current{
+  ValueStream<AudioDataSource?> get current{
     throw UnimplementedError('current() has not been implemented.');
   }
 
