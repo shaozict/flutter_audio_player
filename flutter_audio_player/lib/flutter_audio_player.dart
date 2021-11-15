@@ -5,6 +5,7 @@
 
 import 'dart:io';
 
+import 'package:flutter_audio_player_platform_interface/audio_data_source.dart';
 import 'package:flutter_audio_player_platform_interface/flutter_audio_player_platform_interface.dart';
 import 'package:flutter_audio_player_windows/flutter_audio_player_windows.dart';
 import 'package:rxdart/rxdart.dart';
@@ -21,7 +22,7 @@ class AudioPlayer {
 
   static AudioPlayer? _instance;
 
-  Future<void> open(AudioDataSource dataSource) {
+  Future<void> open(AudioSource dataSource) {
     return _audioPlayerPlatform.open(dataSource);
   }
 
@@ -74,5 +75,8 @@ class AudioPlayer {
     return _audioPlayerPlatform.current;
   }
 
+  Future<void> dispose()async{
+    return _audioPlayerPlatform.dispose();
+  }
 
 }

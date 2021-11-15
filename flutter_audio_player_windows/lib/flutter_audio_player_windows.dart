@@ -1,6 +1,7 @@
 
 import 'dart:io';
 import 'package:dart_vlc/dart_vlc.dart';
+import 'package:flutter_audio_player_platform_interface/audio_data_source.dart';
 import 'package:flutter_audio_player_platform_interface/flutter_audio_player_platform_interface.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -118,25 +119,15 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
    return _playerState.stream;
   }
   @override
-  Future<void> open(AudioDataSource dataSource)async {
-    Media media ;
-    switch(dataSource.audioDataSourceType){
-      case AudioDataSourceType.asset:
-        String assetUrl = dataSource.path;
-        if (dataSource.package != null && dataSource.package!.isNotEmpty) {
-          assetUrl = 'packages/${dataSource.package}/$assetUrl';
-        }
-        media = Media.asset(assetUrl);
-        break;
-      case AudioDataSourceType.file:
-        media = Media.file(File(dataSource.path));
-        break;
-      case AudioDataSourceType.liveStream:
-      case AudioDataSourceType.network:
-        media = Media.network(dataSource.path);
-
+  Future<void> open(AudioSource dataSource)async {
+    if(dataSource is AudioDataSource){
+    Media  media = _coverAudioDataSourceToMedial(dataSource);
+      _player.open(media);
     }
-   _player.open(media);
+    else if(dataSource is AudioPlaylist){
+     _player.open(Playlist(medias: dataSource.playList.map(_coverAudioDataSourceToMedial).toList()));
+    }
+
 
   }
 
@@ -192,5 +183,26 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
         break;
     }
     return audioDataSource;
+  }
+
+  Media _coverAudioDataSourceToMedial(AudioDataSource dataSource){
+    Media media ;
+    switch(dataSource.audioDataSourceType){
+      case AudioDataSourceType.asset:
+        String assetUrl = dataSource.path;
+        if (dataSource.package != null && dataSource.package!.isNotEmpty) {
+          assetUrl = 'packages/${dataSource.package}/$assetUrl';
+        }
+        media = Media.asset(assetUrl);
+        break;
+      case AudioDataSourceType.file:
+        media = Media.file(File(dataSource.path));
+        break;
+      case AudioDataSourceType.liveStream:
+      case AudioDataSourceType.network:
+        media = Media.network(dataSource.path);
+
+    }
+    return media;
   }
 }

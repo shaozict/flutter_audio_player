@@ -4,6 +4,7 @@
 // directory. You can also find a detailed instruction on how to add platforms in the `pubspec.yaml` at https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin-platforms.
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_audio_player_platform_interface/audio_data_source.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'method_channel_audio_player.dart';
@@ -45,7 +46,7 @@ abstract class AudioPlayerPlatform {
   Future<void>dispose()async{
     throw UnimplementedError('dispose() has not been implemented.');
   }
-  Future<void> open(AudioDataSource dataSource) async {
+  Future<void> open(AudioSource dataSource) async {
     throw UnimplementedError('open() has not been implemented.');
   }
 
@@ -110,67 +111,6 @@ abstract class AudioPlayerPlatform {
   void _verifyProvidesDefaultImplementations() {}
 }
 
-enum AudioDataSourceType {
-  network,
-  liveStream,
-  file,
-  asset,
-}
-
-class AudioDataSource {
-  final String path;
-  final String? package;
-  final AudioDataSourceType audioDataSourceType;
-  // Metas _metas;
-  // final Map<String, String>? _networkHeaders;
-  final bool? cached; // download audio then play it
-  final double? playSpeed;
-  final double? pitch;
-
-  AudioDataSource.asset(
-    this.path, {
-    this.playSpeed,
-    this.package,
-    this.pitch,
-  })  : audioDataSourceType = AudioDataSourceType.asset,
-        // _networkHeaders = null,
-        cached = false;
-
-  AudioDataSource.file(
-    this.path, {
-    this.playSpeed,
-    this.pitch,
-  })  : audioDataSourceType = AudioDataSourceType.file,
-        package = null,
-        // _networkHeaders = null,
-        cached = false;
-
-  AudioDataSource.network(
-    this.path, {
-    Map<String, String>? headers,
-    this.cached = false,
-    this.playSpeed,
-    this.pitch,
-  })  : audioDataSourceType = AudioDataSourceType.network,
-        package = null
-        // _networkHeaders = headers
-  ;
-
-  AudioDataSource.liveStream(
-    this.path, {
-    this.playSpeed,
-    this.pitch,
-    Map<String, String>? headers,
-  })  : audioDataSourceType = AudioDataSourceType.liveStream,
-        package = null,
-        // _networkHeaders = headers,
-        cached = false;
-
-  @override
-  String toString() {
-    return 'AudioDataSource{path: $path, package: $package, audioDataSourceType: $audioDataSourceType, cached: $cached, playSpeed: $playSpeed, pitch: $pitch}';
-  }
-}
 
 ///
 enum AudioPlayerState {

@@ -4,6 +4,8 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter_audio_player_platform_interface/flutter_audio_player_platform_interface.dart';
 import 'package:rxdart/rxdart.dart';
 
+import 'audio_data_source.dart';
+
 class MethodChannelAudioPlayer extends AudioPlayerPlatform {
 
 
@@ -12,36 +14,18 @@ class MethodChannelAudioPlayer extends AudioPlayerPlatform {
   Future<void> init() async {}
 
   @override
-  Future<void> open(AudioDataSource dataSource) {
-    Audio audio;
-
-    switch (dataSource.audioDataSourceType) {
-      case AudioDataSourceType.asset:
-        audio = Audio(
-          dataSource.path,
-          package: dataSource.package,
-          playSpeed: dataSource.playSpeed,
-        );
-        break;
-      case AudioDataSourceType.file:
-        audio = Audio.file(
-          dataSource.path,
-          playSpeed: dataSource.playSpeed,
-        );
-        break;
-      case AudioDataSourceType.network:
-        audio = Audio.network(
-          dataSource.path,
-          playSpeed: dataSource.playSpeed,
-        );
-        break;
-      case AudioDataSourceType.liveStream:
-        audio = Audio.liveStream(
-          dataSource.path,
-          playSpeed: dataSource.playSpeed,
-        );
-        break;
+  Future<void> open(AudioSource dataSource) {
+    Playable audio = Playable();
+    if(dataSource is AudioDataSource && dataSource.audioSourceType == AudioSourceType.audio ){
+       audio = _covertAudioDataSourceToAudio(dataSource);
     }
+
+    else if (dataSource is AudioPlaylist){
+     Playlist(
+       audios:  dataSource.playList.map(_covertAudioDataSourceToAudio).toList(),
+     );
+    }
+
     return audioPlayer.open(
       audio,
       playInBackground: PlayInBackground.disabledPause,
@@ -149,6 +133,41 @@ class MethodChannelAudioPlayer extends AudioPlayerPlatform {
     }
 
     return audioDataSource;
+  }
+
+  Audio  _covertAudioDataSourceToAudio( AudioDataSource dataSource){
+    Audio audio;
+
+
+      switch (dataSource.audioDataSourceType) {
+        case AudioDataSourceType.asset:
+          audio = Audio(
+            dataSource.path,
+            package: dataSource.package,
+            playSpeed: dataSource.playSpeed,
+          );
+          break;
+        case AudioDataSourceType.file:
+          audio = Audio.file(
+            dataSource.path,
+            playSpeed: dataSource.playSpeed,
+          );
+          break;
+        case AudioDataSourceType.network:
+          audio = Audio.network(
+            dataSource.path,
+            playSpeed: dataSource.playSpeed,
+          );
+          break;
+        case AudioDataSourceType.liveStream:
+          audio = Audio.liveStream(
+            dataSource.path,
+            playSpeed: dataSource.playSpeed,
+          );
+          break;
+      }
+
+    return audio;
   }
 
 }
