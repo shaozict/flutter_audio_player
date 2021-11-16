@@ -66,9 +66,10 @@ class AudioDataSource  implements AudioSource{
   // _networkHeaders = headers,
         cached = false;
 
+
   @override
   String toString() {
-    return 'AudioDataSource{path: $path, package: $package, audioDataSourceType: $audioDataSourceType, cached: $cached, playSpeed: $playSpeed, pitch: $pitch}';
+    return 'AudioDataSource{path: $path, package: $package, audioDataSourceType: $audioDataSourceType, cached: $cached, playSpeed: $playSpeed, pitch: $pitch, duration: $duration}';
   }
 
   @override

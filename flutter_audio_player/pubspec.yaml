@@ -10,10 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_audio_player_platform_interface: ^0.0.8
+  flutter_audio_player_platform_interface: ^0.0.9
 #  flutter_audio_player_platform_interface:
 #    path: ../flutter_audio_player_platform_interface
-  flutter_audio_player_windows: ^0.0.8
+  flutter_audio_player_windows: ^0.0.9
 #  flutter_audio_player_windows:
 #    path: ../flutter_audio_player_windows
   rxdart: ^0.27.2

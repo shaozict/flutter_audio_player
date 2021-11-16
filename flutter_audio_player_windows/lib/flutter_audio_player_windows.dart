@@ -32,25 +32,26 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
 
 
   late VoidCallback _onListener;
+  bool _isReadPlay = false;
   @override
   Future<void> init() async{
-    print('===== platform init ');
     DartVLC.initialize();
     _player= Player(id: 1);
     _onListener = () {
 
-      _onReadyToPlay.add(_covertMediaToAudioDataSource(_player.current.media??Media.asset('')));
-
       _player.playbackStream.listen((event) {
-        _playlistFinished.add(event.isCompleted);
-
+        if(event.isCompleted){
+          _playlistFinished.add(event.isCompleted);
+        }
 
         AudioPlayerState audioPlayerState;
         if(_player.playback.isPlaying){
           audioPlayerState =AudioPlayerState.play;
           _isPlaying.add(_player.playback.isPlaying);
+
         }else {
           audioPlayerState = AudioPlayerState.pause;
+          _isReadPlay = false;
         }
         _playerState.add(audioPlayerState);
       });
@@ -61,8 +62,14 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
       });
 
       _player.positionStream.listen((event) {
+        if(_player.playback.isPlaying){
+          if(!_isReadPlay){
+            AudioDataSource audioDataSource = _covertMediaToAudioDataSource(_player.current.media??Media.asset(''));
+            _onReadyToPlay.add(audioDataSource);
+            _isReadPlay = true;
+          }
+        }
         _currentPosition.add(event.position??Duration.zero);
-
       });
       _player.bufferingProgressStream.listen((event) {
         _isBuffering.add(!(_player.bufferingProgress == 100));
@@ -170,21 +177,19 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
   }
 
   AudioDataSource _covertMediaToAudioDataSource(Media  media){
-
-
     AudioDataSource audioDataSource;
     switch(media.mediaType){
       case MediaType.asset:
-        audioDataSource = AudioDataSource.asset(media.resource,playSpeed: _player.general.rate,);
+        audioDataSource = AudioDataSource.asset(media.resource,playSpeed: _player.general.rate,duration: _player.position.duration);
         break;
       case MediaType.network:
-        audioDataSource = AudioDataSource.network(media.resource,playSpeed: _player.general.rate,cached: _player.bufferingProgress == 100);
+        audioDataSource = AudioDataSource.network(media.resource,playSpeed: _player.general.rate,cached: _player.bufferingProgress == 100,duration: _player.position.duration);
         break;
       case MediaType.file:
-        audioDataSource = AudioDataSource.file(media.resource,playSpeed: _player.general.rate,);
+        audioDataSource = AudioDataSource.file(media.resource,playSpeed: _player.general.rate,duration: _player.position.duration);
         break;
       case MediaType.directShow:
-        audioDataSource = AudioDataSource.network(media.resource,playSpeed: _player.general.rate,cached: _player.bufferingProgress == 100);
+        audioDataSource = AudioDataSource.network(media.resource,playSpeed: _player.general.rate,cached: _player.bufferingProgress == 100,duration: _player.position.duration);
         break;
     }
     return audioDataSource;

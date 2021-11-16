@@ -18,10 +18,7 @@ class AudioPlayer {
   factory AudioPlayer() {
     return _instance ??= AudioPlayer._();
   }
-  //
-  // AudioPlayerPlatform  get _audioPlayerPlatform{
-  //    return Platform.isWindows ? AudioPlayerWindows.instance : AudioPlayerPlatform.instance;
-  // }
+
   late AudioPlayerPlatform _audioPlayerPlatform;
   static AudioPlayer? _instance;
   Completer ? _initCompleter;
@@ -31,7 +28,6 @@ class AudioPlayer {
    await _audioPlayerPlatform.init();
     _initCompleter =Completer();
    _audioPlayerPlatform.onReadyToPlay.listen((event) {
-     print('==== _initCompleter?.complete()');
       _initCompleter?.complete();
    });
   }
@@ -91,12 +87,10 @@ class AudioPlayer {
   }
 
   Future<void> dispose()async{
-
-    print('===== dispose _initComplete $_initCompleter');
     if(_initCompleter != null){
       await _initCompleter?.future;
+      _initCompleter = null;
+    await  _audioPlayerPlatform.dispose();
     }
-    _initCompleter = null;
-    return _audioPlayerPlatform.dispose();
   }
 }
