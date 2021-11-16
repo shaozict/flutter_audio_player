@@ -1,12 +1,38 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_player/flutter_audio_player.dart';
 // import 'package:flutter_audio_player_platform_interface/flutter_audio_player_platform_interface.dart';
 import 'package:flutter_audio_player_platform_interface/audio_data_source.dart';
 void main() {
   // DartVLC.initialize();
-  runApp(const MyApp());
+  runApp(MaterialApp(
+    home:  HomePage(),
+  ));
 }
 
+class HomePage extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      body: Center(
+        child: TextButton(
+          onPressed: (){
+            Navigator.of(context).push(MaterialPageRoute(
+             builder: (BuildContext context) {
+               return MyApp();
+             },
+            ));
+          },
+          child: const Text(
+            'player'
+          ),
+        ),
+      ),
+    );
+  }
+
+}
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -52,6 +78,12 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
+  void dispose() {
+    AudioPlayer().dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
@@ -80,6 +112,12 @@ class _MyAppState extends State<MyApp> {
                   await AudioPlayer().pause();
                 },
                 child: const Text('pause'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('return'),
               ),
               // ProgressIndicator(
               //   color: Colors.yellow,

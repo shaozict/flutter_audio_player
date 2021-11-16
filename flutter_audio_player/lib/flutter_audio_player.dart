@@ -3,10 +3,12 @@
 // To add platforms, run `flutter create -t plugin --platforms <platforms> .` under the same
 // directory. You can also find a detailed instruction on how to add platforms in the `pubspec.yaml` at https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin-platforms.
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_audio_player_platform_interface/audio_data_source.dart';
 import 'package:flutter_audio_player_platform_interface/flutter_audio_player_platform_interface.dart';
+import 'package:flutter_audio_player_platform_interface/method_channel_audio_player.dart';
 import 'package:flutter_audio_player_windows/flutter_audio_player_windows.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -16,15 +18,22 @@ class AudioPlayer {
   factory AudioPlayer() {
     return _instance ??= AudioPlayer._();
   }
-
-  AudioPlayerPlatform  get _audioPlayerPlatform{
-     return Platform.isWindows ? AudioPlayerWindows.instance : AudioPlayerPlatform.instance;
-  }
-
+  //
+  // AudioPlayerPlatform  get _audioPlayerPlatform{
+  //    return Platform.isWindows ? AudioPlayerWindows.instance : AudioPlayerPlatform.instance;
+  // }
+  late AudioPlayerPlatform _audioPlayerPlatform;
   static AudioPlayer? _instance;
+  Completer ? _initCompleter;
 
   Future<void> init()async{
-   return _audioPlayerPlatform.init();
+    _audioPlayerPlatform = Platform.isWindows ? AudioPlayerWindows() : MethodChannelAudioPlayer();
+   await _audioPlayerPlatform.init();
+    _initCompleter =Completer();
+   _audioPlayerPlatform.onReadyToPlay.listen((event) {
+     print('==== _initCompleter?.complete()');
+      _initCompleter?.complete();
+   });
   }
 
   Future<void> open(AudioSource dataSource) {
@@ -82,6 +91,12 @@ class AudioPlayer {
   }
 
   Future<void> dispose()async{
+
+    print('===== dispose _initComplete $_initCompleter');
+    if(_initCompleter != null){
+      await _initCompleter?.future;
+    }
+    _initCompleter = null;
     return _audioPlayerPlatform.dispose();
   }
 }

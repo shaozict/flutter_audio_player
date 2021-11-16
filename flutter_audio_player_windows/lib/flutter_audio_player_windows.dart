@@ -1,6 +1,7 @@
 
 import 'dart:io';
 import 'package:dart_vlc/dart_vlc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_audio_player_platform_interface/audio_data_source.dart';
 import 'package:flutter_audio_player_platform_interface/flutter_audio_player_platform_interface.dart';
 import 'package:rxdart/rxdart.dart';
@@ -30,19 +31,20 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
   final BehaviorSubject<AudioDataSource> _onReadyToPlay = BehaviorSubject<AudioDataSource>();
 
 
+  late VoidCallback _onListener;
   @override
   Future<void> init() async{
-
+    print('===== platform init ');
     DartVLC.initialize();
     _player= Player(id: 1);
-    _player.textureId.addListener(() {
-      
+    _onListener = () {
+
       _onReadyToPlay.add(_covertMediaToAudioDataSource(_player.current.media??Media.asset('')));
-      
+
       _player.playbackStream.listen((event) {
         _playlistFinished.add(event.isCompleted);
-        
-        
+
+
         AudioPlayerState audioPlayerState;
         if(_player.playback.isPlaying){
           audioPlayerState =AudioPlayerState.play;
@@ -59,7 +61,6 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
       });
 
       _player.positionStream.listen((event) {
-
         _currentPosition.add(event.position??Duration.zero);
 
       });
@@ -73,10 +74,13 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
           );
         }
       });
-    });
+    };
+    _player.textureId.addListener(_onListener);
   }
   @override
   Future<void> dispose()async {
+     _player.dispose();
+    _player.textureId.removeListener(_onListener);
     await _currentPosition.close();
     await _isBuffering.close();
     await _isPlaying.close();
@@ -86,7 +90,7 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
     await _current.close();
     await _playerState.close();
     await _onReadyToPlay.close();
-   return _player.dispose();
+
   }
   @override
   Future<void> play()async {
@@ -166,6 +170,7 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
   }
 
   AudioDataSource _covertMediaToAudioDataSource(Media  media){
+
 
     AudioDataSource audioDataSource;
     switch(media.mediaType){

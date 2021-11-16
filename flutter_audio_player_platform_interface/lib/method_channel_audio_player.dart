@@ -107,10 +107,6 @@ class MethodChannelAudioPlayer extends AudioPlayerPlatform {
 
   @override
   ValueStream<AudioDataSource?> get current {
-   // return  audioPlayer.current.transform(StreamTransformer<Playing,AudioDataSource>.fromHandlers(handleData: (data,sink){
-   //    sink.add(_covertPlayingAudioToAudioDataSource(data.audio));
-   //
-   //  }));
     return _current.stream;
   }
 
