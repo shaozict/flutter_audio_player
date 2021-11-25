@@ -74,16 +74,20 @@ packages:
   dart_vlc:
     dependency: transitive
     description:
-      name: dart_vlc
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: a47f04f41fe79447e98f455304f81fa159e2b5e9
+      url: "https://github.com/dansunhappy/dart_vlc.git"
+    source: git
     version: "0.1.8"
   dart_vlc_ffi:
     dependency: transitive
     description:
-      name: dart_vlc_ffi
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: ffi
+      ref: HEAD
+      resolved-ref: a47f04f41fe79447e98f455304f81fa159e2b5e9
+      url: "https://github.com/dansunhappy/dart_vlc.git"
+    source: git
     version: "0.1.5"
   fake_async:
     dependency: transitive
@@ -123,10 +127,10 @@ packages:
     description:
       path: flutter_audio_player_windows
       ref: HEAD
-      resolved-ref: "00fa2f8d32c1467adae8d8ab5052d7b7baf3e3d7"
+      resolved-ref: "1debc17e8a6a34adadc46c18343465f83a930c83"
       url: "https://github.com/dansunhappy/flutter_audio_player.git"
     source: git
-    version: "0.0.9"
+    version: "0.0.10"
   flutter_lints:
     dependency: "direct dev"
     description:
