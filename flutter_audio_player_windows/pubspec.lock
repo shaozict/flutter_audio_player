@@ -74,16 +74,20 @@ packages:
   dart_vlc:
     dependency: "direct main"
     description:
-      name: dart_vlc
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: a47f04f41fe79447e98f455304f81fa159e2b5e9
+      url: "https://github.com/dansunhappy/dart_vlc.git"
+    source: git
     version: "0.1.8"
   dart_vlc_ffi:
     dependency: transitive
     description:
-      name: dart_vlc_ffi
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: ffi
+      ref: HEAD
+      resolved-ref: a47f04f41fe79447e98f455304f81fa159e2b5e9
+      url: "https://github.com/dansunhappy/dart_vlc.git"
+    source: git
     version: "0.1.5"
   fake_async:
     dependency: transitive
@@ -338,4 +342,4 @@ packages:
     version: "0.2.0"
 sdks:
   dart: ">=2.13.0 <3.0.0"
-  flutter: ">=2.2.0"
+  flutter: ">=2.0.0"

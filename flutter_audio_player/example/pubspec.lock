@@ -135,9 +135,11 @@ packages:
   flutter_audio_player_windows:
     dependency: transitive
     description:
-      name: flutter_audio_player_windows
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: flutter_audio_player_windows
+      ref: HEAD
+      resolved-ref: "00fa2f8d32c1467adae8d8ab5052d7b7baf3e3d7"
+      url: "https://github.com/dansunhappy/flutter_audio_player.git"
+    source: git
     version: "0.0.9"
   flutter_lints:
     dependency: "direct dev"
