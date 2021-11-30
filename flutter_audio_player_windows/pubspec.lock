@@ -76,7 +76,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: b456bb89aac7e11ee5b0f17bc24534196ac0854d
+      resolved-ref: b7317a3cdcc47e6e8e933f8f952486dd468f450c
       url: "https://github.com/dansunhappy/dart_vlc.git"
     source: git
     version: "0.1.8"
@@ -85,7 +85,7 @@ packages:
     description:
       path: ffi
       ref: HEAD
-      resolved-ref: b456bb89aac7e11ee5b0f17bc24534196ac0854d
+      resolved-ref: b7317a3cdcc47e6e8e933f8f952486dd468f450c
       url: "https://github.com/dansunhappy/dart_vlc.git"
     source: git
     version: "0.1.5"
