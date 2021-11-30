@@ -37,6 +37,9 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
   Future<void> init() async{
     DartVLC.initialize();
     _player= Player(id: 1);
+    _player.textureId.addListener(() {
+
+    });
     _onListener = () {
 
       _player.playbackStream.listen((event) {
@@ -64,6 +67,7 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
       _player.positionStream.listen((event) {
         if(_player.playback.isPlaying){
           if(!_isReadPlay){
+            _player.setVolume(1.0);
             AudioDataSource audioDataSource = _covertMediaToAudioDataSource(_player.current.media??Media.asset(''));
             _onReadyToPlay.add(audioDataSource);
             _isReadPlay = true;
