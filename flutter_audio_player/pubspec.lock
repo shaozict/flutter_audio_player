@@ -76,7 +76,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: a47f04f41fe79447e98f455304f81fa159e2b5e9
+      resolved-ref: b456bb89aac7e11ee5b0f17bc24534196ac0854d
       url: "https://github.com/dansunhappy/dart_vlc.git"
     source: git
     version: "0.1.8"
@@ -85,7 +85,7 @@ packages:
     description:
       path: ffi
       ref: HEAD
-      resolved-ref: a47f04f41fe79447e98f455304f81fa159e2b5e9
+      resolved-ref: b456bb89aac7e11ee5b0f17bc24534196ac0854d
       url: "https://github.com/dansunhappy/dart_vlc.git"
     source: git
     version: "0.1.5"
@@ -127,7 +127,7 @@ packages:
     description:
       path: flutter_audio_player_windows
       ref: HEAD
-      resolved-ref: c50bac6aab4ed2d2c7e4afac6748feba3523b4ec
+      resolved-ref: deea397d69af1de6ddda786bb585c618010ec870
       url: "https://github.com/dansunhappy/flutter_audio_player.git"
     source: git
     version: "0.0.10"
