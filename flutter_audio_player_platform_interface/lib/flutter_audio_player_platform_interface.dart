@@ -43,9 +43,10 @@ abstract class AudioPlayerPlatform {
     throw UnimplementedError('init() has not been implemented.');
   }
 
-  Future<void>dispose()async{
+  Future<void> dispose() async {
     throw UnimplementedError('dispose() has not been implemented.');
   }
+
   Future<void> open(AudioSource dataSource) async {
     throw UnimplementedError('open() has not been implemented.');
   }
@@ -58,18 +59,19 @@ abstract class AudioPlayerPlatform {
     throw UnimplementedError('volume() has not been implemented.');
   }
 
-
   ValueStream<bool> get isBuffering {
     throw UnimplementedError('isBuffering() has not been implemented.');
   }
+
   ValueStream<bool> get isPlaying {
     throw UnimplementedError('isPlaying() has not been implemented.');
   }
+
   ValueStream<Duration> get currentPosition {
     throw UnimplementedError('currentPosition() has not been implemented.');
   }
 
-  Stream<AudioPlayerState> get playerState{
+  Stream<AudioPlayerState> get playerState {
     throw UnimplementedError('playerState() has not been implemented.');
   }
 
@@ -77,7 +79,7 @@ abstract class AudioPlayerPlatform {
     throw UnimplementedError('currentPosition() has not been implemented.');
   }
 
-  ValueStream<AudioDataSource?> get current{
+  ValueStream<AudioDataSource?> get current {
     throw UnimplementedError('current() has not been implemented.');
   }
 
@@ -90,9 +92,14 @@ abstract class AudioPlayerPlatform {
     throw UnimplementedError('pause() has not been implemented.');
   }
 
+  Future<void> seek(Duration to) async {
+    throw UnimplementedError('seek() has not been implemented.');
+  }
+
   ValueStream<bool> get playlistFinished {
     throw UnimplementedError('playlistFinished() has not been implemented.');
   }
+
   Future<void> stop() async {
     throw UnimplementedError('stop() has not been implemented.');
   }
@@ -110,7 +117,6 @@ abstract class AudioPlayerPlatform {
 
   void _verifyProvidesDefaultImplementations() {}
 }
-
 
 ///
 enum AudioPlayerState {

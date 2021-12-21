@@ -21,25 +21,25 @@ class AudioPlayer {
 
   late AudioPlayerPlatform _audioPlayerPlatform;
   static AudioPlayer? _instance;
-  Completer ? _initCompleter;
+  Completer? _initCompleter;
 
-  Future<void> init()async{
+  Future<void> init() async {
     _audioPlayerPlatform = Platform.isWindows ? AudioPlayerWindows() : MethodChannelAudioPlayer();
-   await _audioPlayerPlatform.init();
-    _initCompleter =Completer();
-   _audioPlayerPlatform.onReadyToPlay.listen((event) {
+    await _audioPlayerPlatform.init();
+    _initCompleter = Completer();
+    _audioPlayerPlatform.onReadyToPlay.listen((event) {
       _initCompleter?.complete();
-   });
+    });
   }
 
   Future<void> open(AudioSource dataSource) {
     return _audioPlayerPlatform.open(dataSource);
   }
 
-
-  Future<void> setPlaySpeed(double playSpeed){
+  Future<void> setPlaySpeed(double playSpeed) {
     return _audioPlayerPlatform.setPlaySpeed(playSpeed);
   }
+
   Future<void> play() {
     return _audioPlayerPlatform.play();
   }
@@ -50,6 +50,10 @@ class AudioPlayer {
 
   Future<void> stop() {
     return _audioPlayerPlatform.stop();
+  }
+
+  Future<void> seek(Duration to) {
+    return _audioPlayerPlatform.seek(to);
   }
 
   ValueStream<double> get playSpeed {
@@ -63,15 +67,16 @@ class AudioPlayer {
   ValueStream<bool> get isBuffering {
     return _audioPlayerPlatform.isBuffering;
   }
+
   ValueStream<bool> get isPlaying {
     return _audioPlayerPlatform.isPlaying;
   }
+
   ValueStream<bool> get playlistFinished {
     return _audioPlayerPlatform.playlistFinished;
   }
 
-
-  Stream<AudioPlayerState> get playerState{
+  Stream<AudioPlayerState> get playerState {
     return _audioPlayerPlatform.playerState;
   }
 
@@ -82,15 +87,16 @@ class AudioPlayer {
   Stream<AudioDataSource?> get onReadyToPlay {
     return _audioPlayerPlatform.onReadyToPlay;
   }
+
   ValueStream<AudioDataSource?> get current {
     return _audioPlayerPlatform.current;
   }
 
-  Future<void> dispose()async{
-    if(_initCompleter != null){
+  Future<void> dispose() async {
+    if (_initCompleter != null) {
       await _initCompleter?.future;
       _initCompleter = null;
-    await  _audioPlayerPlatform.dispose();
+      await _audioPlayerPlatform.dispose();
     }
   }
 }

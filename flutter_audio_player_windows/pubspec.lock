@@ -121,7 +121,7 @@ packages:
       name: flutter_audio_player_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.9"
+    version: "0.0.10"
   flutter_lints:
     dependency: "direct dev"
     description:
