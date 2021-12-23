@@ -36,7 +36,13 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
     _onListener = () {
       _player.playbackStream.listen((event) {
         if (event.isCompleted) {
-          _playlistFinished.add(event.isCompleted);
+          if (_player.current.isPlaylist) {
+            if (_player.current.index == _player.current.medias.length - 1) {
+              _playlistFinished.add(event.isCompleted);
+            }
+          } else {
+            _playlistFinished.add(event.isCompleted);
+          }
         }
 
         AudioPlayerState audioPlayerState;
@@ -129,7 +135,9 @@ class AudioPlayerWindows extends AudioPlayerPlatform {
       Media media = _coverAudioDataSourceToMedial(dataSource);
       _player.open(media);
     } else if (dataSource is AudioPlaylist) {
-      _player.open(Playlist(medias: dataSource.playList.map(_coverAudioDataSourceToMedial).toList()));
+      _player.open(
+        Playlist(medias: dataSource.playList.map(_coverAudioDataSourceToMedial).toList()),
+      );
     }
   }
 
