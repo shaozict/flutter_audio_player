@@ -28,7 +28,10 @@ class AudioPlayer {
     await _audioPlayerPlatform.init();
     _initCompleter = Completer();
     _audioPlayerPlatform.onReadyToPlay.listen((event) {
-      _initCompleter?.complete();
+      if(!_initCompleter!.isCompleted){
+        _initCompleter?.complete();
+      }
+
     });
   }
 
