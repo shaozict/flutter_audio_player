@@ -9,18 +9,23 @@ import 'audio_data_source.dart';
 class MethodChannelAudioPlayer extends AudioPlayerPlatform {
   late AssetsAudioPlayer audioPlayer;
   final BehaviorSubject<AudioDataSource> _current = BehaviorSubject<AudioDataSource>();
-
+  final BehaviorSubject<AudioDataSource> _onReadyPlay = BehaviorSubject<AudioDataSource>();
   @override
   Future<void> init() async {
     audioPlayer = AssetsAudioPlayer.withId('SINGLE_PLAYER');
-    audioPlayer.current.listen((event) {
-      _current.add(_covertPlayingAudioToAudioDataSource(event?.audio.audio ?? Audio('')));
-    });
   }
 
   @override
   Future<void> open(AudioSource dataSource) {
     Playable audio = Playable();
+    audioPlayer.current.listen((event) {
+      _current.add(
+        _covertPlayingAudioToAudioDataSource(event?.audio ?? PlayingAudio(audio: Audio(''))),
+      );
+    });
+    audioPlayer.onReadyToPlay.listen((event) {
+      _onReadyPlay.add(_covertPlayingAudioToAudioDataSource(event ?? PlayingAudio(audio: Audio(''))));
+    });
     if (dataSource is AudioDataSource && dataSource.audioSourceType == AudioSourceType.audio) {
       audio = _covertAudioDataSourceToAudio(dataSource);
     } else if (dataSource is AudioPlaylist) {
@@ -112,26 +117,27 @@ class MethodChannelAudioPlayer extends AudioPlayerPlatform {
 
   @override
   Stream<AudioDataSource?> get onReadyToPlay {
-    return audioPlayer.onReadyToPlay.transform<AudioDataSource>(StreamTransformer<PlayingAudio, AudioDataSource>.fromHandlers(handleData: (data, sink) {
-      AudioDataSource audioDataSource = _covertPlayingAudioToAudioDataSource(data.audio);
-      sink.add(audioDataSource);
-    }));
+    // print('audioPlayer.onReadyToPlay.runtimeType ${audioPlayer.onReadyToPlay.listen((event) {
+    //   print('sssss ${event.toString()}');
+    // })}');
+
+    return _onReadyPlay.stream;
   }
 
-  AudioDataSource _covertPlayingAudioToAudioDataSource(Audio audio) {
+  AudioDataSource _covertPlayingAudioToAudioDataSource(PlayingAudio audio) {
     AudioDataSource audioDataSource;
-    switch (audio.audioType) {
+    switch (audio.audio.audioType) {
       case AudioType.asset:
-        audioDataSource = AudioDataSource.asset(audio.path, playSpeed: audio.playSpeed);
+        audioDataSource = AudioDataSource.asset(audio.audio.path, playSpeed: audio.audio.playSpeed, duration: audio.duration);
         break;
       case AudioType.network:
-        audioDataSource = AudioDataSource.network(audio.path, playSpeed: audio.playSpeed);
+        audioDataSource = AudioDataSource.network(audio.audio.path, playSpeed: audio.audio.playSpeed, duration: audio.duration);
         break;
       case AudioType.file:
-        audioDataSource = AudioDataSource.file(audio.path, playSpeed: audio.playSpeed);
+        audioDataSource = AudioDataSource.file(audio.audio.path, playSpeed: audio.audio.playSpeed, duration: audio.duration);
         break;
       case AudioType.liveStream:
-        audioDataSource = AudioDataSource.liveStream(audio.path, playSpeed: audio.playSpeed);
+        audioDataSource = AudioDataSource.liveStream(audio.audio.path, playSpeed: audio.audio.playSpeed, duration: audio.duration);
         break;
     }
 

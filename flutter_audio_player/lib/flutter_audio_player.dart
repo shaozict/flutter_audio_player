@@ -27,14 +27,14 @@ class AudioPlayer {
     _audioPlayerPlatform = Platform.isWindows ? AudioPlayerWindows() : MethodChannelAudioPlayer();
     await _audioPlayerPlatform.init();
     _initCompleter = Completer();
+  }
+
+  Future<void> open(AudioSource dataSource) {
     _audioPlayerPlatform.onReadyToPlay.listen((event) {
       if (!_initCompleter!.isCompleted) {
         _initCompleter?.complete();
       }
     });
-  }
-
-  Future<void> open(AudioSource dataSource) {
     return _audioPlayerPlatform.open(dataSource);
   }
 
