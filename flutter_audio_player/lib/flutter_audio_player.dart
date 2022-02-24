@@ -4,12 +4,9 @@
 // directory. You can also find a detailed instruction on how to add platforms in the `pubspec.yaml` at https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin-platforms.
 
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter_audio_player_platform_interface/audio_data_source.dart';
 import 'package:flutter_audio_player_platform_interface/flutter_audio_player_platform_interface.dart';
-import 'package:flutter_audio_player_platform_interface/method_channel_audio_player.dart';
-import 'package:flutter_audio_player_windows/flutter_audio_player_windows.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AudioPlayer {
@@ -24,7 +21,7 @@ class AudioPlayer {
   Completer? _initCompleter;
 
   Future<void> init() async {
-    _audioPlayerPlatform = Platform.isWindows ? AudioPlayerWindows() : MethodChannelAudioPlayer();
+    _audioPlayerPlatform = AudioPlayerPlatform.instance;
     await _audioPlayerPlatform.init();
     _initCompleter = Completer();
   }
