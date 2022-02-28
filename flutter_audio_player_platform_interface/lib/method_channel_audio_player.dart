@@ -17,6 +17,7 @@ class MethodChannelAudioPlayer extends AudioPlayerPlatform {
 
   @override
   Future<void> open(AudioSource dataSource) {
+    print('assssss2');
     Playable audio = Playable();
     audioPlayer.current.listen((event) {
       _current.add(
@@ -33,7 +34,7 @@ class MethodChannelAudioPlayer extends AudioPlayerPlatform {
         audios: dataSource.playList.map(_covertAudioDataSourceToAudio).toList(),
       );
     }
-
+    print('assssssss3');
     return audioPlayer.open(
       audio,
       playInBackground: PlayInBackground.disabledPause,

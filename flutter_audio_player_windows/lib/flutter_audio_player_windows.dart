@@ -6,6 +6,11 @@ import 'package:flutter_audio_player_platform_interface/flutter_audio_player_pla
 import 'package:rxdart/rxdart.dart';
 
 class AudioPlayerWindows extends AudioPlayerPlatform {
+  /// Registers this class as the default instance of [UrlLauncherPlatform].
+  static void registerWith() {
+    AudioPlayerPlatform.instance = AudioPlayerWindows();
+  }
+
   static AudioPlayerWindows instance = AudioPlayerWindows();
   late Player _player;
 

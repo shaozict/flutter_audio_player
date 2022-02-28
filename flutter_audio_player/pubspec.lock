@@ -21,14 +21,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.8.1"
-  audio_video_progress_bar:
-    dependency: transitive
-    description:
-      name: audio_video_progress_bar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.10.0"
+    version: "2.8.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -42,7 +35,7 @@ packages:
       name: characters
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.2.0"
   charcode:
     dependency: transitive
     description:
@@ -71,24 +64,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
-  dart_vlc:
-    dependency: transitive
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: b7317a3cdcc47e6e8e933f8f952486dd468f450c
-      url: "https://github.com/dansunhappy/dart_vlc.git"
-    source: git
-    version: "0.1.8"
-  dart_vlc_ffi:
-    dependency: transitive
-    description:
-      path: ffi
-      ref: HEAD
-      resolved-ref: b7317a3cdcc47e6e8e933f8f952486dd468f450c
-      url: "https://github.com/dansunhappy/dart_vlc.git"
-    source: git
-    version: "0.1.5"
   fake_async:
     dependency: transitive
     description:
@@ -118,19 +93,10 @@ packages:
   flutter_audio_player_platform_interface:
     dependency: "direct main"
     description:
-      name: flutter_audio_player_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../flutter_audio_player_platform_interface"
+      relative: true
+    source: path
     version: "0.0.11"
-  flutter_audio_player_windows:
-    dependency: "direct main"
-    description:
-      path: flutter_audio_player_windows
-      ref: HEAD
-      resolved-ref: "45444a8a6a3d8ef01b0e4c30c73e99729375d892"
-      url: "https://github.com/dansunhappy/flutter_audio_player.git"
-    source: git
-    version: "0.0.10"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -182,7 +148,14 @@ packages:
       name: matcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.10"
+    version: "0.12.11"
+  material_color_utilities:
+    dependency: transitive
+    description:
+      name: material_color_utilities
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.3"
   meta:
     dependency: transitive
     description:
@@ -320,7 +293,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.2"
+    version: "0.4.8"
   typed_data:
     dependency: transitive
     description:
@@ -341,7 +314,7 @@ packages:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   win32:
     dependency: transitive
     description:
