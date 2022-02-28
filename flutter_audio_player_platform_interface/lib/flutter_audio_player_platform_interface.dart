@@ -5,11 +5,16 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_audio_player_platform_interface/audio_data_source.dart';
+import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'method_channel_audio_player.dart';
 
-abstract class AudioPlayerPlatform {
+abstract class AudioPlayerPlatform extends PlatformInterface {
+  AudioPlayerPlatform() : super(token: _token);
+
+  static final Object _token = Object();
+
   /// The default instance of [AudioPlayerPlatform] to use.
   ///
   /// Defaults to [MethodChannelAudioPlayer].

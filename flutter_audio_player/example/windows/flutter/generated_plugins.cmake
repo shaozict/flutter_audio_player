@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   dart_vlc
+  flutter_audio_player_windows
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)

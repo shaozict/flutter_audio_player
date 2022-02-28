@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_player/flutter_audio_player.dart';
 // import 'package:flutter_audio_player_platform_interface/flutter_audio_player_platform_interface.dart';
@@ -45,14 +43,17 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     AudioPlayer().dispose().then((value) {
       AudioPlayer().init();
+      print('asssss');
       AudioPlayer()
           .open(AudioDataSource.network(
               'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/private/edudata/product/oxford/v2/followReadMp3/917e23f1abc732398dbc740a0a068a91/0027_11.mp3'))
           .then((value) {
+        print('asssss0.1');
         AudioPlayer().current.listen((event) {
           print('==== current ${event.toString()}');
         });
 
+        print('asssss1');
         AudioPlayer().currentPosition.listen((event) {
           print('==== currentPosition ${AudioPlayer().currentPosition.value.toString()}');
         });
