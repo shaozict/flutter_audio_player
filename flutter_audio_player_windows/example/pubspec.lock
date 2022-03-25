@@ -125,9 +125,11 @@ packages:
   flutter_audio_player_platform_interface:
     dependency: transitive
     description:
-      path: "../../flutter_audio_player_platform_interface"
-      relative: true
-    source: path
+      path: flutter_audio_player_platform_interface
+      ref: HEAD
+      resolved-ref: "0553534ea746baee649991f2629ada684a5303cb"
+      url: "https://github.com/shaozict/flutter_audio_player.git"
+    source: git
     version: "0.0.11"
   flutter_audio_player_windows:
     dependency: "direct main"

@@ -12,6 +12,7 @@ flutter:
       windows:
         default_package: flutter_audio_player_windows
 
+
 dependencies:
   flutter:
     sdk: flutter
